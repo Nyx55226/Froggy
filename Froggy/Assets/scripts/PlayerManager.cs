@@ -14,7 +14,6 @@ public class PlayerManager : MonoBehaviour
     private Animator an;
     
     
-    
     [SerializeField] private GameObject groundedCheck;
     [SerializeField] private LayerMask groundedLayer;
 
@@ -33,9 +32,9 @@ public class PlayerManager : MonoBehaviour
 
 
 
-    [SerializeField] private AudioSource jumpAudio;
-    [SerializeField] private AudioSource fireAudio;
-    
+    [SerializeField] private AudioSource[] audio;
+
+    [SerializeField] private int stelle;
     private void Awake()
     {
         rb = GetComponent<Rigidbody2D>();
@@ -54,24 +53,19 @@ public class PlayerManager : MonoBehaviour
 
     public void jump(InputAction.CallbackContext context)
     {
-        if (isGrounded())
+        if (UtilisMethod.isGrounded(groundedCheck.transform, 0.2f, groundedLayer))
         {
             rb.linearVelocityY = playerJumpForce;
-            jumpAudio.Play();
+            audio[0].Play();
         }
         
         if (context.canceled && rb.linearVelocityY>0f)
             rb.linearVelocityY =5f;
     }
 
-    private bool isGrounded()
-    {
-        return Physics2D.OverlapCircle(groundedCheck.transform.position, 0.2f, groundedLayer);
-    }
-
     private void Update()
     {
-        an.SetBool("isGrounded",isGrounded());
+        an.SetBool("isGrounded",UtilisMethod.isGrounded(groundedCheck.transform, 0.2f, groundedLayer));
         an.SetFloat("Yvelocity",rb.linearVelocityY);
         if (moveDirection != 0)
             an.SetBool("isMove",true);
@@ -90,14 +84,31 @@ public class PlayerManager : MonoBehaviour
 
     public void fire(InputAction.CallbackContext context)
     {
-        if (context.performed && Time.time > nextFire)
-        {
-            GameObject b=Instantiate(bullet, gun.transform.position, Quaternion.identity);
-            b.transform.localScale=new Vector3(b.transform.localScale.x * transform.localScale.x, b.transform.localScale.y, b.transform.localScale.z);
-            nextFire = Time.time + reloading;
-            fireAudio.Play();
-        }
-        
+        if (!context.performed || !(Time.time > nextFire)) return;
+        GameObject b=Instantiate(bullet, gun.transform.position, Quaternion.identity);
+        b.transform.localScale=new Vector3(b.transform.localScale.x * transform.localScale.x, b.transform.localScale.y, b.transform.localScale.z);
+        nextFire = Time.time + reloading;
+        audio[1].Play();
+    }
 
+    private void OnCollisionEnter2D(Collision2D other)
+    {
+        if (other.gameObject.CompareTag("Enemy"))
+        {
+            AudioSource.PlayClipAtPoint(audio[2].clip,transform.position);
+            Destroy(gameObject);
+            Time.timeScale = 0f;
+        }
+    }
+
+    private void OnTriggerEnter2D(Collider2D other)
+    {
+        if (other.gameObject.CompareTag("Star"))
+        {
+            audio[3].Play();
+            stelle++;
+            Destroy(other.gameObject);
+            Debug.Log(stelle);
+        }
     }
 }

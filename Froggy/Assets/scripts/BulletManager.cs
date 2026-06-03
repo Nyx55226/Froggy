@@ -17,13 +17,19 @@ public class BulletManager : MonoBehaviour
     {
         transform.Translate(transform.right * (_speed * transform.localScale.x * Time.deltaTime));
 
-        if (isGrounded())
+        if (UtilisMethod.isGrounded(transform,0.2f,layer))
         {
             Destroy(gameObject);
         }
     }
-    private bool isGrounded()
+
+
+    private void OnCollisionEnter2D(Collision2D other)
     {
-        return Physics2D.OverlapCircle(transform.position, 0.2f, layer);
+        if (other.gameObject.CompareTag("Enemy"))
+        {
+            Destroy(other.gameObject);
+            Destroy(gameObject);
+        }
     }
 }
