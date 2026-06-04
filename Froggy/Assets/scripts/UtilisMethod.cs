@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class UtilisMethod : MonoBehaviour
+public class UtilisMethod
 {
     public static bool isGrounded(Transform t , float radius, LayerMask l)
     {

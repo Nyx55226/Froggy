@@ -21,6 +21,7 @@ public class PlayerManager : MonoBehaviour
     private float playerJumpForce = 12f;
     private float calcolSpeed;
     private float currentSpeed;
+    
 
 
 
@@ -53,14 +54,11 @@ public class PlayerManager : MonoBehaviour
 
     public void jump(InputAction.CallbackContext context)
     {
-        if (UtilisMethod.isGrounded(groundedCheck.transform, 0.2f, groundedLayer))
+        if (UtilisMethod.isGrounded(groundedCheck.transform, 0.1f, groundedLayer))
         {
             rb.linearVelocityY = playerJumpForce;
             audio[0].Play();
         }
-        
-        if (context.canceled && rb.linearVelocityY>0f)
-            rb.linearVelocityY =5f;
     }
 
     private void Update()
@@ -93,11 +91,17 @@ public class PlayerManager : MonoBehaviour
 
     private void OnCollisionEnter2D(Collision2D other)
     {
-        if (other.gameObject.CompareTag("Enemy"))
+        if (other.gameObject.CompareTag("Enemy") || other.gameObject.CompareTag("Spike"))
         {
             AudioSource.PlayClipAtPoint(audio[2].clip,transform.position);
             Destroy(gameObject);
             Time.timeScale = 0f;
+        }
+
+        if (other.gameObject.CompareTag("collectible"))
+        {
+            audio[3].Play();
+            Destroy(other.gameObject);
         }
     }
 
@@ -105,7 +109,6 @@ public class PlayerManager : MonoBehaviour
     {
         if (other.gameObject.CompareTag("Star"))
         {
-            audio[3].Play();
             stelle++;
             Destroy(other.gameObject);
             Debug.Log(stelle);
