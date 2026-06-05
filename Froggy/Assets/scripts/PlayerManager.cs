@@ -27,7 +27,7 @@ public class PlayerManager : MonoBehaviour
 
     [SerializeField] private GameObject bullet;
     [SerializeField] private GameObject gun;
-    private float reloading=0.5f;
+    private float reloading=0.2f;
     private float nextFire;
 
 
@@ -109,9 +109,7 @@ public class PlayerManager : MonoBehaviour
     {
         if (other.gameObject.CompareTag("Star"))
         {
-            stelle++;
-            Destroy(other.gameObject);
-            Debug.Log(stelle);
+            TransitionManager.instance.loadNextLevel();
         }
     }
 }
