@@ -8,6 +8,7 @@ TagManager:
   - Star
   - Spike
   - collectible
+  - TriggerStart
   layers:
   - Default
   - TransparentFX

@@ -1,15 +1,13 @@
 using System;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using UnityEngine.Playables;
 
 public class PlayerManager : MonoBehaviour
 {
     [Range(-1,1)] private float moveDirection;
     [Range(-1,1)] private float lastDirection;
     
-    
-    
-
     private Rigidbody2D rb;
     private Animator an;
     
@@ -40,7 +38,6 @@ public class PlayerManager : MonoBehaviour
         rb = GetComponent<Rigidbody2D>();
         an = GetComponent<Animator>();
     }
-
     public void isMove(InputAction.CallbackContext context)
     {
         moveDirection = context.ReadValue<Vector2>().x;
