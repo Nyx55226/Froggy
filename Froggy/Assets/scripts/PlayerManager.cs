@@ -107,5 +107,11 @@ public class PlayerManager : MonoBehaviour
         {
             TransitionManager.instance.loadNextLevel();
         }
+
+        if (other.gameObject.CompareTag("TriggerStart"))
+        {
+            CameraLogic.setActive();
+            AudioSource.PlayClipAtPoint(audio[2].clip,transform.position);
+        }
     }
 }

@@ -21,10 +21,23 @@ public class TransitionManager : MonoBehaviour
 
     IEnumerator loadScene()
     {
+        if (SceneManager.GetActiveScene().buildIndex + 1 >= SceneManager.sceneCountInBuildSettings)
+        {
+            an.SetTrigger("triggerTransitition");
+            
+            yield return new WaitForSeconds(1);
+            
+            PlayerPrefs.SetInt("LevelCount",1);
+            
+            SceneManager.LoadScene(0);
+            StopAllCoroutines();
+        }
         an.SetTrigger("triggerTransitition");
+        
+        PlayerPrefs.SetInt("LevelCount",SceneManager.GetActiveScene().buildIndex+1);
 
         yield return new WaitForSeconds(1);
         
-        SceneManager.LoadScene(0);
+        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex+1);
     }
 }
