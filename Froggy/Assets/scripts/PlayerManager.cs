@@ -29,9 +29,8 @@ public class PlayerManager : MonoBehaviour
     [SerializeField] private GameObject gun;
     private float reloading=0.2f;
     private float nextFire;
-
-
-
+    
+    
 
     [SerializeField] private AudioSource[] audio;
 
