@@ -27,14 +27,16 @@ public class TransitionManager : MonoBehaviour
             
             yield return new WaitForSeconds(1);
             
-            PlayerPrefs.SetInt("LevelCount",1);
+            PlayerPrefs.DeleteKey("LevelCount");
+            PlayerPrefs.Save();
             
             SceneManager.LoadScene(0);
-            StopAllCoroutines();
+            yield break;
         }
         an.SetTrigger("triggerTransitition");
         
         PlayerPrefs.SetInt("LevelCount",SceneManager.GetActiveScene().buildIndex+1);
+        PlayerPrefs.Save();
 
         yield return new WaitForSeconds(1);
         

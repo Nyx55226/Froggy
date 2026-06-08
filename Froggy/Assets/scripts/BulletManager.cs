@@ -8,15 +8,11 @@ public class BulletManager : MonoBehaviour
     [SerializeField] private LayerMask layer;
     private float time = 3f;
 
-    private void Start()
-    {
-        Destroy(gameObject, time);
-    }
+
 
     private void Update()
     {
         transform.Translate(transform.right * (_speed * transform.localScale.x * Time.deltaTime));
-
         if (UtilisMethod.isGrounded(transform,0.2f,layer))
         {
             Destroy(gameObject);
@@ -29,6 +25,12 @@ public class BulletManager : MonoBehaviour
         if (other.gameObject.CompareTag("Enemy"))
         {
             Destroy(other.gameObject);
+            Destroy(gameObject);
+        }
+
+        if (other.gameObject.CompareTag("Spike"))
+        {
+            Debug.Log("coap");
             Destroy(gameObject);
         }
     }

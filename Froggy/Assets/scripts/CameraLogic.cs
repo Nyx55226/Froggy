@@ -8,16 +8,21 @@ public class CameraLogic : MonoBehaviour
     private Vector3 velocity=Vector3.zero;
     private static bool active = true;
 
+    private void Start()
+    {
+        active = true;
+    }
+
     private void LateUpdate()
     {
-        if (active)
+        if (active && player != null) 
         {
             Vector3 followPlayer = player.position + new Vector3(0, 0, -10);
             transform.position = Vector3.SmoothDamp(transform.position, followPlayer, ref velocity, smoothTime);
         }
     }
 
-    public static void setActive()
+    public static void Deactive()
     {
         active = false;
     }

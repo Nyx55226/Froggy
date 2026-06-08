@@ -7,7 +7,7 @@ public class GameManager : MonoBehaviour
     public static GameManager instance;
 
     private int IndexLevel;
-    private void Start()
+    private void Awake()
     {
         
         if (instance == null)
@@ -15,8 +15,13 @@ public class GameManager : MonoBehaviour
             instance = this;
             DontDestroyOnLoad(gameObject);
         }
+        else
+        {
+            Destroy(gameObject);
+        }
         IndexLevel=PlayerPrefs.GetInt("LevelCount",1);
     }
+    
 
     public void loadLevel()
     {

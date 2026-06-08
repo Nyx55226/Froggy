@@ -2,6 +2,7 @@ using System;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.Playables;
+using UnityEngine.SceneManagement;
 
 public class PlayerManager : MonoBehaviour
 {
@@ -19,6 +20,8 @@ public class PlayerManager : MonoBehaviour
     private float playerJumpForce = 12f;
     private float calcolSpeed;
     private float currentSpeed;
+
+    [SerializeField] private PlayerInput input;
     
 
 
@@ -90,8 +93,8 @@ public class PlayerManager : MonoBehaviour
         if (other.gameObject.CompareTag("Enemy") || other.gameObject.CompareTag("Spike"))
         {
             AudioSource.PlayClipAtPoint(audio[2].clip,transform.position);
-            Destroy(gameObject);
-            Time.timeScale = 0f;
+            loadTheDeadScene();
+            
         }
 
         if (other.gameObject.CompareTag("collectible"))
@@ -110,8 +113,16 @@ public class PlayerManager : MonoBehaviour
 
         if (other.gameObject.CompareTag("TriggerStart"))
         {
-            CameraLogic.setActive();
+            CameraLogic.Deactive();
             AudioSource.PlayClipAtPoint(audio[2].clip,transform.position);
+            loadTheDeadScene();
         }
+    }
+
+    private void loadTheDeadScene()
+    {
+        input.DeactivateInput();
+        DeadTransitionManager.Instance.StartDeadanimation();
+        Destroy(gameObject);
     }
 }

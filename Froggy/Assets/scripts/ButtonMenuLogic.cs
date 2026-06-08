@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class ButtonMenuLogic : MonoBehaviour
 {
@@ -11,4 +12,11 @@ public class ButtonMenuLogic : MonoBehaviour
     {
         GameManager.instance.loadLevel();
     }
+
+    public void ReturnToHome()
+    {
+        SceneManager.LoadScene(0);
+    }
+
+    
 }
