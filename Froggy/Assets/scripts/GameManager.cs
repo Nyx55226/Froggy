@@ -14,17 +14,19 @@ public class GameManager : MonoBehaviour
         {
             instance = this;
             DontDestroyOnLoad(gameObject);
+            QualitySettings.vSyncCount = 0;
+            Application.targetFrameRate = 60;
         }
         else
         {
             Destroy(gameObject);
         }
-        IndexLevel=PlayerPrefs.GetInt("LevelCount",1);
     }
-    
+
 
     public void loadLevel()
     {
+        IndexLevel=PlayerPrefs.GetInt("LevelCount",1);
         SceneManager.LoadSceneAsync(IndexLevel);
     }
 }

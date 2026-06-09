@@ -318,15 +318,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3b7fb4eb08a5bd34fa719131e2dbe486, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PlayerManager
-  d: {fileID: 0}
-  p: {fileID: 6857904937693086085}
   groundedCheck: {fileID: 7133068570164837295}
   groundedLayer:
     serializedVersion: 2
     m_Bits: 8
+  input: {fileID: 0}
   bullet: {fileID: 2678409132664120572, guid: 70348647e6c919a4099c8ca6e0fa8657, type: 3}
   gun: {fileID: 3492410921312169048}
-  audio:
+  resourceAudio:
   - {fileID: 1846891351412458376}
   - {fileID: 4156809440911968823}
   - {fileID: 4499228009264041548}

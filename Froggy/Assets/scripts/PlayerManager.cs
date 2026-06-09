@@ -1,8 +1,10 @@
 using System;
+using JetBrains.Annotations;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.Playables;
 using UnityEngine.SceneManagement;
+using UnityEngine.Serialization;
 
 public class PlayerManager : MonoBehaviour
 {
@@ -33,7 +35,7 @@ public class PlayerManager : MonoBehaviour
     
     
 
-    [SerializeField] private AudioSource[] audio;
+    [SerializeField] private AudioSource[] resourceAudio;
 
     [SerializeField] private int stelle;
     private void Awake()
@@ -56,7 +58,7 @@ public class PlayerManager : MonoBehaviour
         if (UtilisMethod.isGrounded(groundedCheck.transform, 0.1f, groundedLayer))
         {
             rb.linearVelocityY = playerJumpForce;
-            audio[0].Play();
+            resourceAudio[0].Play();
         }
     }
 
@@ -85,22 +87,17 @@ public class PlayerManager : MonoBehaviour
         GameObject b=Instantiate(bullet, gun.transform.position, Quaternion.identity);
         b.transform.localScale=new Vector3(b.transform.localScale.x * transform.localScale.x, b.transform.localScale.y, b.transform.localScale.z);
         nextFire = Time.time + reloading;
-        audio[1].Play();
+        resourceAudio[1].Play();
     }
 
     private void OnCollisionEnter2D(Collision2D other)
     {
         if (other.gameObject.CompareTag("Enemy") || other.gameObject.CompareTag("Spike"))
         {
-            AudioSource.PlayClipAtPoint(audio[2].clip,transform.position);
+            AudioSource.PlayClipAtPoint(resourceAudio[2].clip,transform.position);
             loadTheDeadScene();
+            Destroy(gameObject);
             
-        }
-
-        if (other.gameObject.CompareTag("collectible"))
-        {
-            audio[3].Play();
-            Destroy(other.gameObject);
         }
     }
 
@@ -114,15 +111,19 @@ public class PlayerManager : MonoBehaviour
         if (other.gameObject.CompareTag("TriggerStart"))
         {
             CameraLogic.Deactive();
-            AudioSource.PlayClipAtPoint(audio[2].clip,transform.position);
+            AudioSource.PlayClipAtPoint(resourceAudio[2].clip,transform.position);
             loadTheDeadScene();
         }
+        if (other.gameObject.CompareTag("collectible"))
+        {
+            resourceAudio[3].Play();
+            Destroy(other.gameObject);
+        }
     }
-
+    
     private void loadTheDeadScene()
     {
         input.DeactivateInput();
         DeadTransitionManager.Instance.StartDeadanimation();
-        Destroy(gameObject);
     }
 }

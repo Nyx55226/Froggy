@@ -17,16 +17,20 @@ public class DeadTransitionManager : MonoBehaviour
 
     public void StartDeadanimation()
     {
-        StartCoroutine(animation());
+        StartCoroutine(transition());
     }
 
-    IEnumerator animation()
+    IEnumerator transition()
     {
+        
         an.SetTrigger("triggerDead");
 
         yield return new WaitForSeconds(2);
         
         UI.gameObject.SetActive(true);
+        Cursor.visible = true;
+        Cursor.lockState = CursorLockMode.None;
+
     }
     
 }

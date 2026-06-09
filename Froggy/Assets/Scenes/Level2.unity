@@ -3143,7 +3143,7 @@ PrefabInstance:
       objectReference: {fileID: 674795732}
     - target: {fileID: 3861588299621794672, guid: 4123781742cc63b448c61560e8a2611b, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
-      value: playBtn
+      value: ContinueGame
       objectReference: {fileID: 0}
     - target: {fileID: 5190981994791695569, guid: 4123781742cc63b448c61560e8a2611b, type: 3}
       propertyPath: m_Pivot.x

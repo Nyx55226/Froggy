@@ -31,6 +31,8 @@ public class TransitionManager : MonoBehaviour
             PlayerPrefs.Save();
             
             SceneManager.LoadScene(0);
+            Cursor.visible = true;
+            Cursor.lockState = CursorLockMode.None;
             yield break;
         }
         an.SetTrigger("triggerTransitition");
@@ -40,6 +42,8 @@ public class TransitionManager : MonoBehaviour
 
         yield return new WaitForSeconds(1);
         
-        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex+1);
+        SceneManager.LoadScene(PlayerPrefs.GetInt("LevelCount"));
+        Cursor.visible = false;
+        Cursor.lockState = CursorLockMode.Locked;
     }
 }

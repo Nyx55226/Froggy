@@ -4,10 +4,10 @@ using UnityEngine;
 
 public class BulletManager : MonoBehaviour
 {
-    private readonly float _speed= 8f;
+    private readonly float _speed= 6f;
     [SerializeField] private LayerMask layer;
-    private float time = 3f;
-
+    private float elapsedTime = 0;
+    
 
 
     private void Update()
@@ -17,6 +17,13 @@ public class BulletManager : MonoBehaviour
         {
             Destroy(gameObject);
         }
+
+        elapsedTime += Time.deltaTime;
+        if (elapsedTime >= 2f)
+        {
+            Destroy(gameObject);
+            
+        }
     }
 
 
@@ -25,12 +32,6 @@ public class BulletManager : MonoBehaviour
         if (other.gameObject.CompareTag("Enemy"))
         {
             Destroy(other.gameObject);
-            Destroy(gameObject);
-        }
-
-        if (other.gameObject.CompareTag("Spike"))
-        {
-            Debug.Log("coap");
             Destroy(gameObject);
         }
     }
